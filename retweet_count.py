@@ -2,7 +2,7 @@
 
 Test tweepy by python3.6.7
 
-Description: Show 20 tweets (only text) of follow people.
+Description: Show 20 tweets (user, text, retweet_count) of follow people.
 
 '''
 
@@ -30,8 +30,9 @@ AS = PathModule.access_token_secret
 auth = tweepy.OAuthHandler(CK, CS) # App registration
 auth.set_access_token(AT, AS) # Account registration
 
-api = tweepy.API(auth) # creat a class of tweepy
+api = tweepy.API(auth_handler=auth) # creat a class of tweepy
 
-public_tweets = api.home_timeline() # get timeline
+public_tweets = api.home_timeline()
+
 for tweet in public_tweets:
-    print(tweet.text) # show text of timeline
+    print("user : ", tweet.user.name, "\ntext : ", tweet.text, "\nretweet : ", tweet.retweet_count) 
