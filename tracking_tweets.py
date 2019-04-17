@@ -44,21 +44,21 @@ def show_retweet():
         if tweet.retweet_count > 100:
             temp = []
             try:
-                temp = [tweet.retweeted_status.id, tweet.retweet_count]
-                print("\nThis is retweets.\nuser : ",
-                      tweet.retweeted_status.user.name,
-                      "\ntext : \n",
-                      tweet.retweeted_status.text,
-                      "\nretweet : ",
-                      tweet.retweet_count)
+                temp = [tweet.retweeted_status.id, tweet.retweet_count, 0]
+                #print("\nThis is retweets.\nuser : ",
+                #      tweet.retweeted_status.user.name,
+                #      "\ntext : \n",
+                #      tweet.retweeted_status.text,
+                #      "\nretweet : ",
+                #      tweet.retweet_count)
             except:
-                temp = [tweet.id, tweet.retweet_count]
-                print("\nuser : ",
-                      tweet.user.name,
-                      "\ntext : \n",
-                      tweet.text,
-                      "\nretweet : ",
-                      tweet.retweet_count)
+                temp = [tweet.id, tweet.retweet_count, 0]
+                #print("\nuser : ",
+                #      tweet.user.name,
+                #      "\ntext : \n",
+                #      tweet.text,
+                #      "\nretweet : ",
+                #      tweet.retweet_count)
 
             temp2.append(temp)
 
@@ -70,8 +70,8 @@ def show_retweet():
 def manage_retweet():
     for id_retweets in tweet_id_retweets:
         tweet = api.get_status(id_retweets[0])
-        if tweet.retweet_count - id_retweets[1] > 1:
-            print("\nuser : ",
+        if tweet.retweet_count - id_retweets[1] > 20:
+            print("\nreplay\nuser : ",
                   tweet.user.name,
                   "\ntext : \n",
                   tweet.text,
@@ -90,6 +90,7 @@ if __name__ == "__main__":
     while True:
         time.sleep(900)
         manage_retweet()
-        time.slppe(10)
+        time.sleep(10)
         show_retweet()
 
+#
