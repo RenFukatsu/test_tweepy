@@ -63,13 +63,13 @@ class RetweetsManager():
         temp_remove_tweets = []
         for tweets in reserve_tweets:
             tweet = api.get_status(tweets.tweet_id)
-            #if tweet.retweet_count - tweets.retweet_count > 1:
-            tweets.retweet_count_change += 1 #tweet.retweet_count - tweets.retweet_count
-            #else:
-                #temp_remove_tweets.append(tweets)
+            if tweet.retweet_count - tweets.retweet_count > 1:
+                tweets.retweet_count_change = tweet.retweet_count - tweets.retweet_count
+            else:
+                temp_remove_tweets.append(tweets)
         
-        #for tweets in temp_remove_tweets:
-        #    reserve_tweets.remove(tweets)
+        for tweets in temp_remove_tweets:
+            reserve_tweets.remove(tweets)
     
     def ShowAllRetweets(self):
         print("-------------Ranking-----------------")
@@ -84,7 +84,7 @@ class RetweetsManager():
             #      tweets.tweet_text,)
 
     def SwapRetweetRanking(self):
-        reserve_tweets.sort(reverse=True,key=lambda x:x.retweet_count)
+        reserve_tweets.sort(reverse=True,key=lambda x:x.retweet_count_change)
     
     def RemoveSameRetweets(self):
         reserve_tweets.sort(reverse=True,key=lambda x:(x.retweet_id, x.retweet_count_change))
@@ -116,10 +116,14 @@ def main():
     a.ShowAllRetweets()
 
     while True:
-        time.sleep(900)
+        for i in range(60):
+            time.sleep(60)
+            try:
+                a.GetTimeline()
+            except:
+                pass
+            a.RemoveSameRetweets()
         a.ComfirmRetweetsChange()
-        a.GetTimeline()
-        a.RemoveSameRetweets()
         a.SwapRetweetRanking()
         a.ShowAllRetweets()
 
