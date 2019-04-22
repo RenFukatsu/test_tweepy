@@ -1,0 +1,134 @@
+-------------Ranking-----------------
+Retweets: 7168 	 id: 1119970723273908224 	 change: 274
+Retweets: 470 	 id: 1119947246210957312 	 change: 199
+Retweets: 1016 	 id: 1119519500724924416 	 change: 27
+Retweets: 221 	 id: 1119879008735252480 	 change: 21
+Retweets: 315 	 id: 1119871640261709824 	 change: 16
+Retweets: 61 	 id: 1119947557713485824 	 change: 10
+Retweets: 5675 	 id: 1119534133028376576 	 change: 10
+Retweets: 850 	 id: 1119556310473646081 	 change: 8
+Retweets: 153 	 id: 1119879182610157568 	 change: 6
+Retweets: 435 	 id: 1119557154220826625 	 change: 6
+Retweets: 1113 	 id: 1119518215170691072 	 change: 6
+Retweets: 591 	 id: 1119562464926953472 	 change: 5
+Retweets: 203 	 id: 1119555949226651648 	 change: 3
+Retweets: 103 	 id: 1119519577463934976 	 change: 2
+-------------Ranking-----------------
+Retweets: 7304 	 id: 1119970723273908224 	 change: 136
+Retweets: 580 	 id: 1119947246210957312 	 change: 110
+Retweets: 1033 	 id: 1119519500724924416 	 change: 17
+Retweets: 861 	 id: 1119556310473646081 	 change: 11
+Retweets: 601 	 id: 1119562464926953472 	 change: 10
+Retweets: 162 	 id: 1119879182610157568 	 change: 9
+Retweets: 324 	 id: 1119871640261709824 	 change: 9
+Retweets: 229 	 id: 1119879008735252480 	 change: 8
+Retweets: 492 	 id: 1119552080501301248 	 change: 7
+Retweets: 5682 	 id: 1119534133028376576 	 change: 7
+Retweets: 64 	 id: 1119947557713485824 	 change: 3
+Retweets: 42796 	 id: 1119855123503534080 	 change: 2
+-------------Ranking-----------------
+Retweets: 7403 	 id: 1119970723273908224 	 change: 99
+Retweets: 638 	 id: 1119947246210957312 	 change: 58
+Retweets: 1049 	 id: 1119519500724924416 	 change: 16
+Retweets: 236 	 id: 1119879008735252480 	 change: 7
+Retweets: 329 	 id: 1119871640261709824 	 change: 5
+Retweets: 165 	 id: 1119879182610157568 	 change: 3
+Retweets: 1116 	 id: 1119518215170691072 	 change: 3
+Retweets: 66 	 id: 1119947557713485824 	 change: 2
+Retweets: 863 	 id: 1119556310473646081 	 change: 2
+Retweets: 206 	 id: 1119555949226651648 	 change: 2
+Retweets: 494 	 id: 1119552080501301248 	 change: 2
+Retweets: 5684 	 id: 1119534133028376576 	 change: 2
+-------------Ranking-----------------
+Retweets: 7453 	 id: 1119970723273908224 	 change: 50
+Retweets: 669 	 id: 1119947246210957312 	 change: 31
+Retweets: 871 	 id: 1119556310473646081 	 change: 8
+Retweets: 69 	 id: 1119947557713485824 	 change: 3
+Retweets: 239 	 id: 1119879008735252480 	 change: 3
+Retweets: 1052 	 id: 1119519500724924416 	 change: 3
+Retweets: 5687 	 id: 1119534133028376576 	 change: 3
+Retweets: 167 	 id: 1119879182610157568 	 change: 2
+Retweets: 496 	 id: 1119552080501301248 	 change: 2
+Retweets: 1118 	 id: 1119518215170691072 	 change: 2
+-------------Ranking-----------------
+Retweets: 7478 	 id: 1119970723273908224 	 change: 25
+Retweets: 690 	 id: 1119947246210957312 	 change: 21
+Retweets: 243 	 id: 1119879008735252480 	 change: 4
+Retweets: 1121 	 id: 1119518215170691072 	 change: 3
+Retweets: 331 	 id: 1119871640261709824 	 change: 2
+Retweets: 1054 	 id: 1119519500724924416 	 change: 2
+-------------Ranking-----------------
+Retweets: 720 	 id: 1119947246210957312 	 change: 30
+Retweets: 7505 	 id: 1119970723273908224 	 change: 27
+Retweets: 246 	 id: 1119879008735252480 	 change: 3
+Retweets: 875 	 id: 1119556310473646081 	 change: 3
+Retweets: 333 	 id: 1119871640261709824 	 change: 2
+Retweets: 49 	 id: 1119594232442839040 	 change: 2
+-------------Ranking-----------------
+Retweets: 7568 	 id: 1119970723273908224 	 change: 63
+Retweets: 769 	 id: 1119947246210957312 	 change: 49
+Retweets: 1060 	 id: 1119519500724924416 	 change: 6
+Retweets: 250 	 id: 1119879008735252480 	 change: 4
+Retweets: 605 	 id: 1119562464926953472 	 change: 4
+Retweets: 336 	 id: 1119871640261709824 	 change: 3
+Retweets: 438 	 id: 1119557154220826625 	 change: 2
+Retweets: 208 	 id: 1119555949226651648 	 change: 2
+Retweets: 5690 	 id: 1119534133028376576 	 change: 2
+-------------Ranking-----------------
+Retweets: 7681 	 id: 1119970723273908224 	 change: 113
+Retweets: 865 	 id: 1119947246210957312 	 change: 96
+Retweets: 262 	 id: 1119879008735252480 	 change: 12
+Retweets: 1071 	 id: 1119519500724924416 	 change: 11
+Retweets: 174 	 id: 1119879182610157568 	 change: 6
+Retweets: 610 	 id: 1119562464926953472 	 change: 5
+Retweets: 1127 	 id: 1119518215170691072 	 change: 5
+Retweets: 340 	 id: 1119871640261709824 	 change: 4
+Retweets: 880 	 id: 1119556310473646081 	 change: 4
+Retweets: 5693 	 id: 1119534133028376576 	 change: 3
+Retweets: 73 	 id: 1119947557713485824 	 change: 2
+Retweets: 210 	 id: 1119555949226651648 	 change: 2
+Retweets: 499 	 id: 1119552080501301248 	 change: 2
+-------------Ranking-----------------
+Retweets: 7811 	 id: 1119970723273908224 	 change: 130
+Retweets: 986 	 id: 1119947246210957312 	 change: 121
+Retweets: 1093 	 id: 1119519500724924416 	 change: 22
+Retweets: 274 	 id: 1119879008735252480 	 change: 12
+Retweets: 887 	 id: 1119556310473646081 	 change: 7
+Retweets: 616 	 id: 1119562464926953472 	 change: 6
+Retweets: 1133 	 id: 1119518215170691072 	 change: 6
+Retweets: 78 	 id: 1119947557713485824 	 change: 5
+Retweets: 345 	 id: 1119871640261709824 	 change: 5
+Retweets: 5697 	 id: 1119534133028376576 	 change: 4
+Retweets: 177 	 id: 1119879182610157568 	 change: 3
+-------------Ranking-----------------
+Retweets: 7919 	 id: 1119970723273908224 	 change: 108
+Retweets: 1088 	 id: 1119947246210957312 	 change: 102
+Retweets: 1107 	 id: 1119519500724924416 	 change: 14
+Retweets: 282 	 id: 1119879008735252480 	 change: 8
+Retweets: 82 	 id: 1119947557713485824 	 change: 4
+Retweets: 5701 	 id: 1119534133028376576 	 change: 4
+Retweets: 180 	 id: 1119879182610157568 	 change: 3
+Retweets: 619 	 id: 1119562464926953472 	 change: 3
+Retweets: 347 	 id: 1119871640261709824 	 change: 2
+Retweets: 42799 	 id: 1119855123503534080 	 change: 2
+-------------Ranking-----------------
+Retweets: 1201 	 id: 1119947246210957312 	 change: 113
+Retweets: 8016 	 id: 1119970723273908224 	 change: 97
+Retweets: 1129 	 id: 1119519500724924416 	 change: 22
+Retweets: 290 	 id: 1119879008735252480 	 change: 8
+Retweets: 352 	 id: 1119871640261709824 	 change: 5
+Retweets: 1137 	 id: 1119518215170691072 	 change: 3
+Retweets: 182 	 id: 1119879182610157568 	 change: 2
+Retweets: 621 	 id: 1119562464926953472 	 change: 2
+Retweets: 889 	 id: 1119556310473646081 	 change: 2
+Retweets: 5703 	 id: 1119534133028376576 	 change: 2
+-------------Ranking-----------------
+Retweets: 1327 	 id: 1119947246210957312 	 change: 126
+Retweets: 8108 	 id: 1119970723273908224 	 change: 92
+Retweets: 1140 	 id: 1119519500724924416 	 change: 11
+Retweets: 300 	 id: 1119879008735252480 	 change: 10
+Retweets: 626 	 id: 1119562464926953472 	 change: 5
+Retweets: 1140 	 id: 1119518215170691072 	 change: 3
+Retweets: 354 	 id: 1119871640261709824 	 change: 2
+Retweets: 503 	 id: 1119552080501301248 	 change: 2
+
