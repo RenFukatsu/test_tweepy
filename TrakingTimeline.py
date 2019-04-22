@@ -67,6 +67,7 @@ class RetweetsManager():
                 tweets.retweet_count_change = tweet.retweet_count - tweets.retweet_count
             else:
                 temp_remove_tweets.append(tweets)
+            tweets.retweet_count = tweet.retweet_count
         
         for tweets in temp_remove_tweets:
             reserve_tweets.remove(tweets)
