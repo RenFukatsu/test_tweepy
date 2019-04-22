@@ -35,10 +35,9 @@ reserve_tweets = []
 count = 0
 
 class ReserveRetweeets:
-    def __init__(self, tweet_id, retweet_id, user_name, 
+    def __init__(self, tweet_id, user_name, 
                  tweet_text, retweet_count, retweet_count_change):
         self.tweet_id = tweet_id
-        self.retweet_id = retweet_id
         self.user_name =user_name
         self.tweet_text =tweet_text
         self.retweet_count = retweet_count
@@ -52,10 +51,10 @@ class RetweetsManager():
         for tweet in public_tweets:
             if tweet.retweet_count > 10:
                 try:
-                    temp_tweet = ReserveRetweeets(tweet.id, tweet.retweeted_status.id, tweet.retweeted_status.user.name,
+                    temp_tweet = ReserveRetweeets(tweet.retweeted_status.id, tweet.retweeted_status.user.name,
                                                   tweet.retweeted_status.text, tweet.retweeted_status.retweet_count, 0)
                 except:
-                    temp_tweet = ReserveRetweeets(tweet.id, tweet.id, tweet.user.name,
+                    temp_tweet = ReserveRetweeets(tweet.id, tweet.user.name,
                                                   tweet.text, tweet.retweet_count, 0)
                 reserve_tweets.append(temp_tweet)
         
@@ -88,14 +87,14 @@ class RetweetsManager():
         reserve_tweets.sort(reverse=True,key=lambda x:x.retweet_count_change)
     
     def RemoveSameRetweets(self):
-        reserve_tweets.sort(reverse=True,key=lambda x:(x.retweet_id, x.retweet_count_change))
-        temp_retweet_id = 0
+        reserve_tweets.sort(reverse=True,key=lambda x:(x.tweet_id, x.retweet_count_change))
+        temp_tweet_id = 0
         temp_remove_tweets = []
         for tweets in reserve_tweets:
-            if tweets.retweet_id == temp_retweet_id:
+            if tweets.tweet_id == temp_tweet_id:
                 temp_remove_tweets.append(tweets)
             
-            temp_retweet_id = tweets.retweet_id
+            temp_tweet_id = tweets.rweet_id
         
         for tweets in temp_remove_tweets:
             reserve_tweets.remove(tweets)
