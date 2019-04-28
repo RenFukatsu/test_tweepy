@@ -40,7 +40,8 @@ class ReserveRetweeets:
         self.tweet_id = tweet_id
         self.user_name =user_name
         self.tweet_text =tweet_text
-        self.retweet_count = retweet_count
+        self.retweet_count = []
+        self.retweet_count.append(retweet_count)
         self.retweet_count_change = retweet_count_change
 
 class RetweetsManager():
@@ -49,7 +50,7 @@ class RetweetsManager():
         public_tweets = api.home_timeline()
 
         for tweet in public_tweets:
-            if tweet.retweet_count > 10:
+            if tweet.retweet_count > 100:
                 try:
                     temp_tweet = ReserveRetweeets(tweet.retweeted_status.id, tweet.retweeted_status.user.name,
                                                   tweet.retweeted_status.text, tweet.retweeted_status.retweet_count, 0)
@@ -57,16 +58,34 @@ class RetweetsManager():
                     temp_tweet = ReserveRetweeets(tweet.id, tweet.user.name,
                                                   tweet.text, tweet.retweet_count, 0)
                 reserve_tweets.append(temp_tweet)
+
+    def RemoveSameRetweets(self):
+        reserve_tweets.sort(reverse=True,key=lambda x:(x.tweet_id, x.retweet_count[0]))
+        temp_tweets = 0
+        temp_tweet_id = 0
+        temp_retweet_count = 0
+        temp_remove_tweets = []
+        for tweets in reserve_tweets:
+            if tweets.tweet_id == temp_tweet_id:
+                temp_remove_tweets.append(temp_tweets)
+                tweets.retweet_count.append(temp_retweet_count)
+            
+            temp_tweets = tweets
+            temp_tweet_id = tweets.tweet_id
+            temp_retweet_count = tweets.retweet_count[0]
         
+        for tweets in temp_remove_tweets:
+            reserve_tweets.remove(tweets)
+
     def ComfirmRetweetsChange(self):
         temp_remove_tweets = []
         for tweets in reserve_tweets:
-            tweet = api.get_status(tweets.tweet_id)
-            if tweet.retweet_count - tweets.retweet_count > 1:
-                tweets.retweet_count_change = tweet.retweet_count - tweets.retweet_count
+            if len(tweets.retweet_count) > 60:
+                del tweets.retweet_count[0]
+            if tweets.retweet_count[-1] - tweets.retweet_count[0] > 1 or len(tweets.retweet_count) != 60:
+                tweets.retweet_count_change = tweets.retweet_count[-1] - tweets.retweet_count[0]
             else:
                 temp_remove_tweets.append(tweets)
-            tweets.retweet_count = tweet.retweet_count
         
         for tweets in temp_remove_tweets:
             reserve_tweets.remove(tweets)
@@ -74,7 +93,7 @@ class RetweetsManager():
     def ShowAllRetweets(self):
         print("-------------Ranking-----------------")
         for tweets in reserve_tweets:
-            print("Retweets:", tweets.retweet_count, "\t", "id:", tweets.tweet_id,
+            print("Retweets:", tweets.retweet_count[-1], "\t", "id:", tweets.tweet_id,
                   "\t", "change:", tweets.retweet_count_change)
             #print("\nRetweet : ",
             #      tweets.retweet_count
@@ -86,22 +105,6 @@ class RetweetsManager():
     def SwapRetweetRanking(self):
         reserve_tweets.sort(reverse=True,key=lambda x:x.retweet_count_change)
     
-    def RemoveSameRetweets(self):
-        reserve_tweets.sort(reverse=True,key=lambda x:(x.tweet_id, x.retweet_count_change))
-        temp_tweet_id = 0
-        temp_remove_tweets = []
-        for tweets in reserve_tweets:
-            if tweets.tweet_id == temp_tweet_id:
-                temp_remove_tweets.append(tweets)
-            
-            temp_tweet_id = tweets.rweet_id
-        
-        for tweets in temp_remove_tweets:
-            reserve_tweets.remove(tweets)
-
-
-    
-
 def p():
     global count
     print(count)
@@ -109,23 +112,18 @@ def p():
 
 
 def main():
-    a = RetweetsManager()
-    a.GetTimeline()
-    a.RemoveSameRetweets()
-    a.SwapRetweetRanking()
-    a.ShowAllRetweets()
+    retweetsManager = RetweetsManager()
 
     while True:
-        for i in range(60):
-            time.sleep(60)
-            try:
-                a.GetTimeline()
-            except:
-                pass
-            a.RemoveSameRetweets()
-        a.ComfirmRetweetsChange()
-        a.SwapRetweetRanking()
-        a.ShowAllRetweets()
+        try:
+            retweetsManager.GetTimeline()
+        except:
+            pass
+        retweetsManager.RemoveSameRetweets()
+        retweetsManager.ComfirmRetweetsChange()
+        retweetsManager.SwapRetweetRanking()
+        retweetsManager.ShowAllRetweets()
+        time.sleep(60)
 
 if __name__ == "__main__":
     main()
