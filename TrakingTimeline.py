@@ -35,11 +35,11 @@ reserve_tweets = []
 count = 0
 
 class ReserveRetweeets:
-    def __init__(self, tweet_id, user_name, 
-                 tweet_text, retweet_count, retweet_count_change):
+    def __init__(self, tweet_id, user_name, tweet_text, media_url, retweet_count, retweet_count_change):
         self.tweet_id = tweet_id
         self.user_name =user_name
         self.tweet_text =tweet_text
+        self.media_url = media_url
         self.retweet_count = []
         self.retweet_count.append(retweet_count)
         self.retweet_count_change = retweet_count_change
@@ -51,12 +51,21 @@ class RetweetsManager():
 
         for tweet in public_tweets:
             if tweet.retweet_count > 100:
+                media_url = []
                 try:
-                    temp_tweet = ReserveRetweeets(tweet.retweeted_status.id, tweet.retweeted_status.user.name,
-                                                  tweet.retweeted_status.text, tweet.retweeted_status.retweet_count, 0)
+                    for i in range(len(tweet.extended_entities["media"][0]["video_info"]["variants"])):
+                        media_url.append(tweet.extended_entities["media"][0]["video_info"]["variants"][i]["url"])
                 except:
-                    temp_tweet = ReserveRetweeets(tweet.id, tweet.user.name,
-                                                  tweet.text, tweet.retweet_count, 0)
+                    try:
+                        for i in range(len(tweet.extended_entities["media"])):
+                            media_url.append(tweet.extended_entities["media"][i]["media_url"])
+                    except:
+                        pass
+
+                try:
+                    temp_tweet = ReserveRetweeets(tweet.retweeted_status.id, tweet.retweeted_status.user.name, tweet.retweeted_status.text, media_url, tweet.retweeted_status.retweet_count, 0)
+                except:
+                    temp_tweet = ReserveRetweeets(tweet.id, tweet.user.name, tweet.text, media_url, tweet.retweet_count, 0)
                 reserve_tweets.append(temp_tweet)
 
     def RemoveSameRetweets(self):
@@ -93,8 +102,7 @@ class RetweetsManager():
     def ShowAllRetweets(self):
         print("-------------Ranking-----------------")
         for tweets in reserve_tweets:
-            print("Retweets:", tweets.retweet_count[-1], "\t", "id:", tweets.tweet_id,
-                  "\t", "change:", tweets.retweet_count_change)
+            print("Retweets:", tweets.retweet_count[-1], "\t", "id:", tweets.tweet_id, "\t", "change:", tweets.retweet_count_change)
             #print("\nRetweet : ",
             #      tweets.retweet_count
             #      "\nUser : ",
