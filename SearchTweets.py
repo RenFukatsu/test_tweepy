@@ -46,11 +46,11 @@ class ReserveRetweeets:
 
 class RetweetsManager():
     global reserve_tweets
-    def GetTimeline(self):
-        public_tweets = api.home_timeline()
+    def GetSearch(self):
+        public_tweets = api.search("RT",lang="ja", count=100) # 180/15min
 
         for tweet in public_tweets:
-            if tweet.retweet_count > 100:
+            if tweet.retweet_count > 1000:
                 media_url = []
                 try:
                     for i in range(len(tweet.extended_entities["media"][0]["video_info"]["variants"])):
@@ -72,16 +72,13 @@ class RetweetsManager():
         reserve_tweets.sort(reverse=True,key=lambda x:(x.tweet_id, x.retweet_count[0]))
         temp_tweets = 0
         temp_tweet_id = 0
-        temp_retweet_count = 0
         temp_remove_tweets = []
         for tweets in reserve_tweets:
             if tweets.tweet_id == temp_tweet_id:
                 temp_remove_tweets.append(temp_tweets)
-                tweets.retweet_count.append(temp_retweet_count)
             
             temp_tweets = tweets
             temp_tweet_id = tweets.tweet_id
-            temp_retweet_count = tweets.retweet_count[0]
         
         for tweets in temp_remove_tweets:
             reserve_tweets.remove(tweets)
@@ -89,12 +86,16 @@ class RetweetsManager():
     def ComfirmRetweetsChange(self):
         temp_remove_tweets = []
         for tweets in reserve_tweets:
-            tweet = api.get_status(tweets.tweet_id)
-            tweets.retweet_count.append(tweet.retweet_count)
+            try:
+                tweet = api.get_status(tweets.tweet_id) # 180/15min
+                tweets.retweet_count.append(tweet.retweet_count)
+            except:
+                print("limit")
+                pass
             if len(tweets.retweet_count) > 60:
                 del tweets.retweet_count[0]
-            if tweet.retweet_count - tweets.retweet_count[0] > 1 or len(tweets.retweet_count) != 60:
-                tweets.retweet_count_change = tweet.retweet_count - tweets.retweet_count[0]
+            if tweets.retweet_count[-1] - tweets.retweet_count[0] > 1000 or len(tweets.retweet_count) != 60:
+                tweets.retweet_count_change = tweets.retweet_count[-1] - tweets.retweet_count[0]
             else:
                 temp_remove_tweets.append(tweets)
         
@@ -125,15 +126,16 @@ def main():
     retweetsManager = RetweetsManager()
 
     while True:
-        try:
-            retweetsManager.GetTimeline()
-        except:
-            pass
-        retweetsManager.RemoveSameRetweets()
+        for i in range(60):
+            try:
+                retweetsManager.GetSearch()
+            except:
+                pass
+            retweetsManager.RemoveSameRetweets()
+            time.sleep(5)
         retweetsManager.ComfirmRetweetsChange()
         retweetsManager.SwapRetweetRanking()
         retweetsManager.ShowAllRetweets()
-        time.sleep(60)
 
 if __name__ == "__main__":
     main()
