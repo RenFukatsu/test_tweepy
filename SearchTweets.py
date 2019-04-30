@@ -50,7 +50,7 @@ class RetweetsManager():
         public_tweets = api.search("RT",lang="ja", count=100) # 180/15min
 
         for tweet in public_tweets:
-            if tweet.retweet_count > 1000:
+            if tweet.retweet_count > 10000:
                 media_url = []
                 try:
                     for i in range(len(tweet.extended_entities["media"][0]["video_info"]["variants"])):
@@ -90,7 +90,7 @@ class RetweetsManager():
                 tweet = api.get_status(tweets.tweet_id) # 180/15min
                 tweets.retweet_count.append(tweet.retweet_count)
             except:
-                print("limit")
+                print("get_status limit")
                 pass
             if len(tweets.retweet_count) > 60:
                 del tweets.retweet_count[0]
@@ -126,10 +126,12 @@ def main():
     retweetsManager = RetweetsManager()
 
     while True:
-        for i in range(60):
+        time_start = time.time()
+        while(time.time() - time_start < 900):
             try:
                 retweetsManager.GetSearch()
             except:
+                print("search limit")
                 pass
             retweetsManager.RemoveSameRetweets()
             time.sleep(5)
