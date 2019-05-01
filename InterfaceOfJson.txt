@@ -1,20 +1,24 @@
 {
-    "id" : int, // tweetのid
-    "user_name" : "string", // tweetした人の名前 
-    "text" : "string", // tweetの本文
-    "media" : {
-        "type" : "string", // text/photo/videoの三択
-        "url" : {
-            0 : "string",
-            1 : "string",
-            ...  // 存在するurlの個数分載っける。
+    0 : {
+        "id" : int, // tweetのid
+        "user_name" : "string", // tweetした人の名前 
+        "text" : "string", // tweetの本文
+        "media" : {
+            "type" : "string", // text/photo/videoの三択
+            "url" : {
+                0 : "string",
+                1 : "string",
+                ...  // 存在するurlの個数分載っける。
+        },
+        "retweet_count" : {
+            0 : int, // 60分前
+            1 : int, // 45分前
+            2 : int, // 30分前
+            3 : int, // 15分前
+            4 : int  // 0分前
+        },
+        "retweet_count_change" : int // retweetの変化数
     },
-    "retweet_count" : {
-        0 : int, // 60分前
-        1 : int, // 45分前
-        2 : int, // 30分前
-        3 : int, // 15分前
-        4 : int  // 0分前
-    }
-    "retweet_count_change" : int // retweetの変化数
+    1 : {...}
+    ...
 }
