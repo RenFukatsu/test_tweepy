@@ -1,6 +1,7 @@
 {
     0 : {
         "id" : int, // tweetのid
+        "url" : "string" // tweetのurl
         "user_name" : "string", // tweetした人の名前 
         "text" : "string", // tweetの本文
         "media" : {
