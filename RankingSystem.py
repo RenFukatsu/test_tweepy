@@ -95,14 +95,17 @@ class RetweetsManager():
                     tweet.retweet_count.extend(before_tweet.retweet_count)
                     if len(tweet.retweet_count) > (60//cycle + 1):
                         del tweet.retweet_count[0]
-                    if tweet.retweet_count[-1] - tweet.retweet_count[0] > 1000 or len(tweet.retweet_count) < 5:
+                    if tweet.retweet_count[-1] - tweet.retweet_count[0] > 1000 or len(tweet.retweet_count) < (60//cycle + 1):
                         tweet.retweet_change = tweet.retweet_count[-1] - tweet.retweet_count[0]
                     else:
-                        removeTweets.append(tweet)
+                            removeTweets.append(tweet)
             before_tweet = tweet
-
+        
         for tweet in removeTweets:
             self.reserveTweets.remove(tweet)
+
+        if not flag:
+            return
 
         before_id = 0
         removeId = []
@@ -173,12 +176,19 @@ def main():
     
     while True:
         time_start = time.time()
-        while time.time() - time_start < 300:
+        while time.time() - time_start < cycle * 60:
             if not retweetsManager.GetSearch():
                 break
+            retweetsManager.RemoveSameRetweets(False)
             time.sleep(5)
-        
-        retweetsManager.RemoveSameRetweets(False)
+
+        # retweetsManager.GetSearch()
+        # time.sleep(10)
+        # retweetsManager.GetSearch()
+        # time.sleep(10)
+        # retweetsManager.GetSearch()
+        # retweetsManager.RemoveSameRetweets(False)
+
         retweetsManager.ConfirmRetweetsChange()
         retweetsManager.SwapRetweetChangeRanking()
         #retweetsManager.ConvertJson()
