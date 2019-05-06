@@ -57,6 +57,9 @@ class RetweetsManager():
                 tweet = tweet.retweeted_status
             except:
                 pass
+
+            if tweet.retweet_count < 1000:
+                continue
             
             media_url = {}
             media_type = ""
@@ -98,13 +101,13 @@ class RetweetsManager():
                     if tweet.retweet_count[-1] - tweet.retweet_count[0] > 1000 or len(tweet.retweet_count) < (60//cycle + 1):
                         tweet.retweet_change = tweet.retweet_count[-1] - tweet.retweet_count[0]
                     else:
-                            removeTweets.append(tweet)
+                        removeTweets.append(tweet)
             before_tweet = tweet
         
         for tweet in removeTweets:
             self.reserveTweets.remove(tweet)
 
-        if not flag:
+        if flag:
             return
 
         before_id = 0
@@ -134,7 +137,7 @@ class RetweetsManager():
 
             for tweet in nowStatus:
                 self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, retweet_count=tweet.retweet_count))
-        
+
         self.RemoveSameRetweets(True)
     
     def SwapRetweetChangeRanking(self):
