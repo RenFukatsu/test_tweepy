@@ -105,7 +105,10 @@ class RetweetsManager():
             before_tweet = tweet
         
         for tweet in removeTweets:
-            self.reserveTweets.remove(tweet)
+            try:
+                self.reserveTweets.remove(tweet)
+            except:
+                pass
 
         if flag:
             return
@@ -119,7 +122,10 @@ class RetweetsManager():
             before_id = tweet_id
         
         for tweet_id in removeId:
-            self.id_list.remove(tweet_id)
+            try:
+                self.id_list.remove(tweet_id)
+            except:
+                pass
 
     def SpilitList(self, n):
         for idx in range(0, len(self.id_list), n):
@@ -171,7 +177,8 @@ class RetweetsManager():
     def ShowTweets(self):
         print("---------------------Ranking----------------------")
         for tweet in self.reserveTweets:
-            print("change : ", tweet.retweet_change, "\tid : ", tweet.id, "\tretweet : ", tweet.retweet_count[-1])
+            if tweet.retweet_change > 100:
+                print("change : ", tweet.retweet_change, "\tid : ", tweet.id, "\tretweet : ", tweet.retweet_count[-1])
     
 
 def main():
@@ -184,13 +191,6 @@ def main():
                 break
             retweetsManager.RemoveSameRetweets(False)
             time.sleep(5)
-
-        # retweetsManager.GetSearch()
-        # time.sleep(10)
-        # retweetsManager.GetSearch()
-        # time.sleep(10)
-        # retweetsManager.GetSearch()
-        # retweetsManager.RemoveSameRetweets(False)
 
         retweetsManager.ConfirmRetweetsChange()
         retweetsManager.SwapRetweetChangeRanking()
