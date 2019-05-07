@@ -3,6 +3,7 @@
         "id" : int, // tweetのid
         "url" : "string" // tweetのurl
         "user_name" : "string", // tweetした人の名前 
+		"screen_name" : "string", // tweetした人の検索名
         "text" : "string", // tweetの本文
         "media" : {
             "type" : "string", // text/photo/videoの三択
@@ -19,6 +20,7 @@
             4 : int  // 0分前
         },
         "retweet_count_change" : int // retweetの変化数
+		"called_count" : int // 拡張機能用:
     },
     1 : {...}
     ...
