@@ -26,7 +26,7 @@ args = sys.argv
 cycle = 5 # minutes
 
 class ModelTweet():
-    def __init__(self, tweet_id=0, user_name="", screen_name="",text="", media_type="", media_url={}, retweet_count=0):
+    def __init__(self, tweet_id=0, user_name="", screen_name="",text="", media_type="", media_url={}, retweet_count=[], retweet_change=0, called_count=0):
         self.id = tweet_id
         self.user_name = user_name
         self.screen_name = screen_name
@@ -35,9 +35,36 @@ class ModelTweet():
         self.media_type = media_type
         self.media_url = media_url
         self.retweet_count = []
-        self.retweet_count.append(retweet_count)
-        self.retweet_change = 0
-        self.called_count = 0
+        self.retweet_count.extend(retweet_count)
+        self.retweet_change = retweet_change
+        self.called_count = called_count
+
+def JsonSerializor():
+    strJson = args[1]
+    dictJson = json.loads(strJson)
+
+    reserveTweets = []
+    i = 0
+
+    while True:
+        try:
+            tweet = dictJson[i]
+            i += 1
+        except:
+            break
+        
+        retweet_count = []
+        j = 0
+        while True:
+            try:
+                retweet_count.append(tweet["retweet_count"][j])
+                j += 1
+            except:
+                break
+
+        reserveTweets.append(ModelTweet(tweet["id"], tweet["user_name"], tweet["screen_name"], tweet["text"], tweet["media"]["type"], tweet["media"]["url"], retweet_count, tweet["retweet_count_change"], tweet["called_count"]))
+
+    return reserveTweets
 
 
 class RetweetsManager():
@@ -75,7 +102,7 @@ class RetweetsManager():
                 except: # text
                     media_type = "text"
             
-            self.reserveTweets.append(ModelTweet(tweet.id, tweet.user.name, tweet.user.screen_name, tweet.text, media_type, media_url, tweet.retweet_count))
+            self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, user_name=tweet.user.name, screen_name=tweet.user.screen_name, text=tweet.text, media_type=media_type, media_url=media_url, retweet_count=[tweet.retweet_count]))
             self.id_list.append(tweet.id)
         
         return True
@@ -108,6 +135,7 @@ class RetweetsManager():
             try:
                 self.reserveTweets.remove(tweet)
             except:
+                print(tweet.id)
                 pass
 
         if flag:
@@ -142,7 +170,7 @@ class RetweetsManager():
                 return
 
             for tweet in nowStatus:
-                self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, retweet_count=tweet.retweet_count))
+                self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, retweet_count=[tweet.retweet_count]))
 
         self.RemoveSameRetweets(True)
     
@@ -161,6 +189,7 @@ class RetweetsManager():
                 "id" : self.reserveTweets[i].id,
                 "url" : self.reserveTweets[i].url,
                 "user_name" : self.reserveTweets[i].user_name,
+                "screen_name" : self.reserveTweets[i].screen_name,
                 "text" : self.reserveTweets[i].text,
                 "media" : {
                     "type" : self.reserveTweets[i].media_type,
@@ -168,6 +197,7 @@ class RetweetsManager():
                 },
                 "retweet_count" : dict_retweet_count,
                 "retweet_count_change" : self.reserveTweets[i].retweet_change,
+                "called_count" : self.reserveTweets[i].called_count
             }
 
         strJson = json.dumps(dictJson)
@@ -177,12 +207,16 @@ class RetweetsManager():
     def ShowTweets(self):
         print("---------------------Ranking----------------------")
         for tweet in self.reserveTweets:
-            if tweet.retweet_change > 100:
+            if tweet.retweet_change > 1000:
                 print("change : ", tweet.retweet_change, "\tid : ", tweet.id, "\tretweet : ", tweet.retweet_count[-1])
     
 
 def main():
-    retweetsManager = RetweetsManager()
+    try:
+        reserveTweets = JsonSerializor()
+        retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
+    except:
+        retweetsManager = RetweetsManager()
     
     while True:
         time_start = time.time()
