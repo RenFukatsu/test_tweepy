@@ -41,7 +41,9 @@ class ModelTweet():
 
 def JsonSerializor():
     strJson = args[1]
-    dictJson = json.loads(strJson)
+    print("json!---------------------------")
+    print(strJson)
+    #dictJson = json.loads(strJson, "utf-8")
 
     reserveTweets = []
     i = 0
@@ -109,7 +111,6 @@ class RetweetsManager():
         
     def RemoveSameRetweets(self, flag):
         self.reserveTweets.sort(reverse=True, key=lambda tweet:(tweet.id, tweet.retweet_count[0]))
-        self.id_list.sort()
 
         before_tweet = self.reserveTweets[-1]
         removeTweets = []
@@ -140,6 +141,8 @@ class RetweetsManager():
 
         if flag:
             return
+
+        self.id_list.sort()
 
         before_id = 0
         removeId = []
@@ -200,7 +203,7 @@ class RetweetsManager():
                 "called_count" : self.reserveTweets[i].called_count
             }
 
-        strJson = json.dumps(dictJson)
+        strJson = json.dumps(dictJson, ensure_ascii=False)
 
         print(strJson)
     
@@ -212,24 +215,30 @@ class RetweetsManager():
     
 
 def main():
-    try:
-        reserveTweets = JsonSerializor()
-        retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
-    except:
-        retweetsManager = RetweetsManager()
+    # try:
+    #     reserveTweets = JsonSerializor()
+    #     retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
+    # except:
+    #     retweetsManager = RetweetsManager()
     
-    while True:
-        time_start = time.time()
-        while time.time() - time_start < cycle * 60:
-            if not retweetsManager.GetSearch():
-                break
-            retweetsManager.RemoveSameRetweets(False)
-            time.sleep(5)
+    reserveTweets = JsonSerializor()
+    retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
+    #retweetsManager.GetSearch()
+    #retweetsManager.RemoveSameRetweets(False)
+    retweetsManager.ConvertJson()
+    
+    # while True:
+    #     time_start = time.time()
+    #     while time.time() - time_start < cycle * 60:
+    #         if not retweetsManager.GetSearch():
+    #             break
+    #         retweetsManager.RemoveSameRetweets(False)
+    #         time.sleep(5)
 
-        retweetsManager.ConfirmRetweetsChange()
-        retweetsManager.SwapRetweetChangeRanking()
-        #retweetsManager.ConvertJson()
-        retweetsManager.ShowTweets()
+    #     retweetsManager.ConfirmRetweetsChange()
+    #     retweetsManager.SwapRetweetChangeRanking()
+    #     #retweetsManager.ConvertJson()
+    #     retweetsManager.ShowTweets()
 
     
 
