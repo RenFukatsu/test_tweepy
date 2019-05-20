@@ -22,7 +22,6 @@ auth.set_access_token(AT, AS)
 
 api = tweepy.API(auth_handler=auth)
 
-args = sys.argv
 cycle = 5 # minutes
 
 class ModelTweet():
@@ -38,36 +37,6 @@ class ModelTweet():
         self.retweet_count.extend(retweet_count)
         self.retweet_change = retweet_change
         self.called_count = called_count
-
-def JsonSerializor():
-    strJson = args[1]
-    print("json!---------------------------")
-    print(strJson)
-    #dictJson = json.loads(strJson, "utf-8")
-
-    reserveTweets = []
-    i = 0
-
-    while True:
-        try:
-            tweet = dictJson[i]
-            i += 1
-        except:
-            break
-        
-        retweet_count = []
-        j = 0
-        while True:
-            try:
-                retweet_count.append(tweet["retweet_count"][j])
-                j += 1
-            except:
-                break
-
-        reserveTweets.append(ModelTweet(tweet["id"], tweet["user_name"], tweet["screen_name"], tweet["text"], tweet["media"]["type"], tweet["media"]["url"], retweet_count, tweet["retweet_count_change"], tweet["called_count"]))
-
-    return reserveTweets
-
 
 class RetweetsManager():
     def __init__(self, reserveTweets=[], id_list=[]):
@@ -215,30 +184,20 @@ class RetweetsManager():
     
 
 def main():
-    # try:
-    #     reserveTweets = JsonSerializor()
-    #     retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
-    # except:
-    #     retweetsManager = RetweetsManager()
+    retweetsManager = RetweetsManager()
     
-    reserveTweets = JsonSerializor()
-    retweetsManager = RetweetsManager(reserveTweets=reserveTweets)
-    #retweetsManager.GetSearch()
-    #retweetsManager.RemoveSameRetweets(False)
-    retweetsManager.ConvertJson()
-    
-    # while True:
-    #     time_start = time.time()
-    #     while time.time() - time_start < cycle * 60:
-    #         if not retweetsManager.GetSearch():
-    #             break
-    #         retweetsManager.RemoveSameRetweets(False)
-    #         time.sleep(5)
+    while True:
+        time_start = time.time()
+        while time.time() - time_start < cycle * 60:
+            if not retweetsManager.GetSearch():
+                break
+            retweetsManager.RemoveSameRetweets(False)
+            time.sleep(5)
 
-    #     retweetsManager.ConfirmRetweetsChange()
-    #     retweetsManager.SwapRetweetChangeRanking()
-    #     #retweetsManager.ConvertJson()
-    #     retweetsManager.ShowTweets()
+        retweetsManager.ConfirmRetweetsChange()
+        retweetsManager.SwapRetweetChangeRanking()
+        #retweetsManager.ConvertJson()
+        retweetsManager.ShowTweets()
 
     
 
