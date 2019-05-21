@@ -11,6 +11,8 @@ import json
 import sys
 import PathModule
 import time
+import threading
+import socket
 
 CK = PathModule.consumer_key
 CS = PathModule.consumer_secret_key
@@ -23,6 +25,8 @@ auth.set_access_token(AT, AS)
 api = tweepy.API(auth_handler=auth)
 
 cycle = 5 # minutes
+
+
 
 class ModelTweet():
     def __init__(self, tweet_id=0, user_name="", screen_name="",text="", media_type="", media_url={}, retweet_count=[], retweet_change=0, called_count=0):
@@ -42,6 +46,22 @@ class RetweetsManager():
     def __init__(self, reserveTweets=[], id_list=[]):
         self.reserveTweets = reserveTweets
         self.id_list = id_list
+        thread = threading.Thread(target=self.socket_server)
+        thread.start()
+
+    def Run(self):
+        while True:
+            time_start = time.time()
+            while time.time() - time_start < cycle * 60:
+                if not self.GetSearch():
+                    break
+                self.RemoveSameRetweets(False)
+                time.sleep(5)
+    
+            self.ConfirmRetweetsChange()
+            self.SwapRetweetChangeRanking()
+            #self.ConvertJson()
+            self.ShowTweets()
 
     def GetSearch(self):
         try:
@@ -153,6 +173,8 @@ class RetweetsManager():
         dictJson = {}
 
         for i in range(len(self.reserveTweets)):
+            if i > 100:
+                break
             dict_retweet_count = {}
             for j in range(len(self.reserveTweets[i].retweet_count)):
                 dict_retweet_count[j] = self.reserveTweets[i].retweet_count[j]
@@ -174,7 +196,35 @@ class RetweetsManager():
 
         strJson = json.dumps(dictJson, ensure_ascii=False)
 
-        print(strJson)
+        return strJson
+    
+    def socket_server(self):
+        main_thread = threading.Thread(target=self.Run)
+        main_thread.start()
+        sock = socket.socket()
+        sock.bind(('127.0.0.1', 5008))
+        sock.listen(1)
+        while True:
+            conn, address = sock.accept()
+            data = conn.recv(1024)
+            if not data:
+                break
+            strJson = data.decode('utf-8')
+            dictJson = json.loads(strJson)
+
+            if(dictJson["command"] != "get_data"):
+                continue
+            
+            conn, address = sock.accept()
+            self.SwapRetweetChangeRanking()
+            strJson = self.ConvertJson()
+            bytesJson = strJson.encode('utf-8')
+
+            conn.sendall(bytesJson)
+
+            conn.close()
+        
+        sock.close()
     
     def ShowTweets(self):
         print("---------------------Ranking----------------------")
@@ -185,21 +235,6 @@ class RetweetsManager():
 
 def main():
     retweetsManager = RetweetsManager()
-    
-    while True:
-        time_start = time.time()
-        while time.time() - time_start < cycle * 60:
-            if not retweetsManager.GetSearch():
-                break
-            retweetsManager.RemoveSameRetweets(False)
-            time.sleep(5)
-
-        retweetsManager.ConfirmRetweetsChange()
-        retweetsManager.SwapRetweetChangeRanking()
-        #retweetsManager.ConvertJson()
-        retweetsManager.ShowTweets()
-
-    
 
 if __name__ == "__main__":
     main()
