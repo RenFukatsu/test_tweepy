@@ -1,6 +1,6 @@
 <?php
 
-$strJson = '{"seq" : 0, "command" : "get_data", "data" : { "number" : "15", "name" : "Jon"}}';
+$strJson = '{"seq" : 0, "command" : "get_daa", "data" : { "number" : "15", "name" : "Jon"}}';
 
 $address = '127.0.0.1';
 $port = 5008;
@@ -12,17 +12,14 @@ socket_write($sock, $strJson, strlen($strJson));
 $data = "";
 do{
     $buf = socket_read($sock, 2048);
-    //echo $buf . "\n";
     if($buf == false){
         break;
     }
     $data .= $buf;
 }while(true);
 $json = json_decode($data);
-// $J = 0;
-// echo $json->{$J}->{"id"} , "\n";
 for($i = 0; $i <100; $i++){
-    echo $json->{$i}->{"id"} . "\t" . $json->{$i}->{"retweet_count_change"} . "\n";
+    echo $json->{$i}->{"url"} . "\t" . $json->{$i}->{"retweet_count_change"} . "\n";
 }
 
 socket_close($sock);

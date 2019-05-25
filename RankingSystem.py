@@ -26,6 +26,7 @@ api = tweepy.API(auth_handler=auth)
 
 cycle = 5 # minutes
 
+lock = threading.Lock()
 
 
 class ModelTweet():
@@ -43,11 +44,13 @@ class ModelTweet():
         self.called_count = called_count
 
 class RetweetsManager():
-    def __init__(self, reserveTweets=[], id_list=[]):
-        self.reserveTweets = reserveTweets
-        self.id_list = id_list
+    def __init__(self, ip, port):
+        self.reserveTweets = []
+        self.id_list = []
+        self.address = ( ip, port)
         thread = threading.Thread(target=self.socket_server)
         thread.start()
+        self.Run()
 
     def Run(self):
         while True:
@@ -199,29 +202,37 @@ class RetweetsManager():
         return strJson
     
     def socket_server(self):
-        main_thread = threading.Thread(target=self.Run)
-        main_thread.start()
+        global lock
         sock = socket.socket()
-        sock.bind(('127.0.0.1', 5008))
+        sock.bind(self.address)
         sock.listen(1)
         while True:
             conn, address = sock.accept()
             data = conn.recv(1024)
             if not data:
                 break
+            lock.acquire()
             strJson = data.decode('utf-8')
             dictJson = json.loads(strJson)
 
-            if(dictJson["command"] != "get_data"):
-                continue
+            if(dictJson["command"] == "get_data"):
+                self.SwapRetweetChangeRanking()
+                sendMsg = self.ConvertJson()
+                sendByte = sendMsg.encode('utf-8')
+
+                conn.sendall(sendByte)
+            else:
+                sendData = {
+                    "seq" : dictJson["seq"],
+                    "command" : dictJson["command"],
+                    "data" : None
+                }
+                sendMsg = json.dumps(sendData, ensure_ascii=False)
+                sendByte = sendMsg.encode('utf-8')
+
+                conn.sendall(sendByte)
             
-            conn, address = sock.accept()
-            self.SwapRetweetChangeRanking()
-            strJson = self.ConvertJson()
-            bytesJson = strJson.encode('utf-8')
-
-            conn.sendall(bytesJson)
-
+            lock.release()
             conn.close()
         
         sock.close()
@@ -234,7 +245,7 @@ class RetweetsManager():
     
 
 def main():
-    retweetsManager = RetweetsManager()
+    retweetsManager = RetweetsManager("127.0.0.1", 5008)
 
 if __name__ == "__main__":
     main()
