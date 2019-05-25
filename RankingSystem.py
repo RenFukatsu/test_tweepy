@@ -215,7 +215,7 @@ class RetweetsManager():
             strJson = data.decode('utf-8')
             dictJson = json.loads(strJson)
 
-            if(dictJson["command"] == "get_data"):
+            if(dictJson["command"] == "get_all_data"):
                 self.SwapRetweetChangeRanking()
                 sendMsg = self.ConvertJson()
                 sendByte = sendMsg.encode('utf-8')

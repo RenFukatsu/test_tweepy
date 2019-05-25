@@ -1,6 +1,6 @@
 <?php
 
-$strJson = '{"seq" : 0, "command" : "get_daa", "data" : { "number" : "15", "name" : "Jon"}}';
+$strJson = '{"seq" : 0, "command" : "get_all_data", "data" : { "number" : "15", "name" : "Jon"}}';
 
 $address = '127.0.0.1';
 $port = 5008;
