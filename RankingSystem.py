@@ -30,7 +30,7 @@ lock = threading.Lock()
 
 
 class ModelTweet():
-    def __init__(self, tweet_id=0, user_name="", screen_name="",text="", media_type="", media_url={}, retweet_count=[], retweet_change=0, called_count=0):
+    def __init__(self, tweet_id=0, user_name="", screen_name="",text="", media_type="", media_url={}, like=0, retweet_count=[], retweet_change=0, called_count=0):
         self.id = tweet_id
         self.user_name = user_name
         self.screen_name = screen_name
@@ -38,6 +38,7 @@ class ModelTweet():
         self.text = text
         self.media_type = media_type
         self.media_url = media_url
+        self.like = like
         self.retweet_count = []
         self.retweet_count.extend(retweet_count)
         self.retweet_change = retweet_change
@@ -96,7 +97,7 @@ class RetweetsManager():
                 except: # text
                     media_type = "text"
             
-            self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, user_name=tweet.user.name, screen_name=tweet.user.screen_name, text=tweet.text, media_type=media_type, media_url=media_url, retweet_count=[tweet.retweet_count]))
+            self.reserveTweets.append(ModelTweet(tweet_id=tweet.id, user_name=tweet.user.name, screen_name=tweet.user.screen_name, text=tweet.text, media_type=media_type, media_url=media_url, like=tweet.favorite_count, retweet_count=[tweet.retweet_count]))
             self.id_list.append(tweet.id)
         
         return True
@@ -192,6 +193,7 @@ class RetweetsManager():
                     "type" : self.reserveTweets[i].media_type,
                     "url" : self.reserveTweets[i].media_url
                 },
+                "like" : self.reserveTweets[i].like,
                 "retweet_count" : dict_retweet_count,
                 "retweet_count_change" : self.reserveTweets[i].retweet_change,
                 "called_count" : self.reserveTweets[i].called_count
